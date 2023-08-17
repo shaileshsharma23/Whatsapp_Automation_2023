@@ -1,0 +1,60 @@
+# Packages
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+import urllib
+import time
+
+# Config
+login_time = 20     # Time for login (in seconds)
+new_msg_time = 3    # TTime for a new message (in seconds)
+send_msg_time = 3   # Time for sending a message (in seconds)
+country_code = 91
+####################
+numbers = ["8810****49","87*****78","966*****5","88****943"]
+
+
+##################
+msg= " Enter your message"
+encoded_msg = urllib.parse.quote(msg)
+    # Set your country code
+
+# Create driver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+
+# Open browser with default link
+link = 'https://web.whatsapp.com'
+driver.get(link)
+time.sleep(login_time)
+
+# Loop Through Numbers List
+
+
+# Loop Through Numbers List
+for num in numbers:
+    link = f'https://web.whatsapp.com/send/?phone={country_code}{num}&text={encoded_msg}'
+    driver.get(link)
+    time.sleep(new_msg_time)
+
+    attachment_menu = driver.find_element(By.CSS_SELECTOR, '[data-testid="attach-menu-plus"]')
+    attachment_menu.click()
+
+    photo_video_option = driver.find_element(By.XPATH,"//input[@accept='image/*,video/mp4,video/3gpp,video/quicktime']")
+    time.sleep(send_msg_time)
+    photo_video_option.send_keys("Photo Path\.jpeg")
+
+
+    time.sleep(send_msg_time)
+
+
+    actions = ActionChains(driver)
+    actions.send_keys(Keys.ENTER)
+    actions.perform()
+    time.sleep(send_msg_time)
+
+# Quit the driver
+driver.quit()
