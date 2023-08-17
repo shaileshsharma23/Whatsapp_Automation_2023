@@ -5,7 +5,7 @@ Whatsaapp Message+ Attatchment send through Python selenium
 # Basic Changes:
 
 pip install selenium
-pip install webdriver-manager
+pip install webdriver-manager 
 #
 numbers = ["881****9349","87****78","966***855","887**9943"]     Just Change the numbers.
 ##
